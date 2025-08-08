@@ -3,7 +3,6 @@ package demoqa;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
 
 import java.io.File;
 
