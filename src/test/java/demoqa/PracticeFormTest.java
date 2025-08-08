@@ -34,6 +34,7 @@ public class PracticeFormTest {
         $x(".//*[@id='gender-radio-1']/..").click();
         $x(".//*[@id='userNumber']").setValue(phone);
 
+        // Заполнение календаря
         $x(".//*[@id='dateOfBirthInput']").click();
         $x(".//*[@class='react-datepicker__month-container']").shouldBe(visible);
         $x(".//*[contains(@class,'month-select')]").selectOption("January");
@@ -51,6 +52,7 @@ public class PracticeFormTest {
         $x(".//div[contains(text(),'Merrut')]").shouldBe(visible).click();
         $x(".//*[@id='submit']").click();
 
+        // Проверка итоговой формы(не всегда сохраняются поля Gender, Subjects, Hobbies, поэтому их не проверяю)
         $x(".//*[@class='modal-content']").shouldBe(visible);
         $x(".//td[text()='Student Name']/following-sibling::td").shouldHave(text("Ivan Petrov"));
         $x(".//td[text()='Student Email']/following-sibling::td").shouldHave(text(email));
