@@ -4,11 +4,11 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class PracticeFormTest {
@@ -16,7 +16,6 @@ public class PracticeFormTest {
     public String email = "test123@test.ru";
     public String phone = "1234567891";
     public String address = "Lenin street, 1";
-    public String filePath = System.getProperty("user.dir") + "/src/test/resources/uploadFiles/hedgehog.jpg";
 
     @BeforeAll
     public static void setUp(){
@@ -28,38 +27,40 @@ public class PracticeFormTest {
     @Test
     public void fillUpPracticeForm() {
         open("/automation-practice-form");
-        $x(".//*[@id='firstName']").setValue("Ivan");
-        $x(".//*[@id='lastName']").setValue("Petrov");
-        $x(".//*[@id='userEmail']").setValue(email);
-        $x(".//*[@id='gender-radio-1']/..").click();
-        $x(".//*[@id='userNumber']").setValue(phone);
+        $("#firstName").setValue("Ivan");
+        $("#lastName").setValue("Petrov");
+        $("#userEmail").setValue(email);
+        $("#gender-radio-1").parent().click();
+        $("#userNumber").setValue(phone);
 
         // Заполнение календаря
-        $x(".//*[@id='dateOfBirthInput']").click();
-        $x(".//*[@class='react-datepicker__month-container']").shouldBe(visible);
-        $x(".//*[contains(@class,'month-select')]").selectOption("January");
-        $x(".//*[contains(@class,'year-select')]").selectOption("2000");
-        $x(".//*[@class='react-datepicker__month']").shouldBe(visible);
-        $x(".//*[contains(@class,'day--001')]").click();
+        $("#dateOfBirthInput").click();
+        $("[class$=month-container]").shouldBe(visible);
+        $("[class$=month-select]").selectOption("January");
+        $("[class$=year-select]").selectOption("2000");
+        $(".react-datepicker__month").shouldBe(visible);
+        $("[class*=day--001]").click();
 
-        $x(".//*[@id='subjectsInput']").setValue("Design");
-        $x(".//*[@id='hobbies-checkbox-2']/..").click();
-        $x(".//*[@id='uploadPicture']").uploadFile(new File(filePath));
-        $x(".//*[@id='currentAddress']").setValue(address);
-        $x(".//*[@id='state']").scrollTo().click();
-        $x(".//div[contains(text(),'Uttar Pradesh')]").shouldBe(visible).click();
-        $x(".//*[@id='city']").click();
-        $x(".//div[contains(text(),'Merrut')]").shouldBe(visible).click();
-        $x(".//*[@id='submit']").click();
+        $("#subjectsInput").setValue("Design");
+        $("#hobbies-checkbox-2").parent().click();
+        $("#uploadPicture").uploadFromClasspath("uploadFiles/hedgehog.jpg");
+        $("#currentAddress").setValue(address);
+        $("#state").scrollTo().click();
+        $(byText("Uttar Pradesh")).shouldBe(visible).click();
+        $("#city").click();
+        $(byText("Merrut")).shouldBe(visible).click();
+        $("#submit").click();
 
-        // Проверка итоговой модалки(не всегда сохраняются поля Gender, Subjects, Hobbies, поэтому их не проверяю)
-        $x(".//*[@class='modal-content']").shouldBe(visible);
-        $x(".//td[text()='Student Name']/following-sibling::td").shouldHave(text("Ivan Petrov"));
-        $x(".//td[text()='Student Email']/following-sibling::td").shouldHave(text(email));
-        $x(".//td[text()='Mobile']/following-sibling::td").shouldHave(text(phone));
-        $x(".//td[text()='Date of Birth']/following-sibling::td").shouldHave(text("01 January,2000"));
-        $x(".//td[text()='Picture']/following-sibling::td").shouldHave(text("hedgehog.jpg"));
-        $x(".//td[text()='Address']/following-sibling::td").shouldHave(text(address));
-        $x(".//td[text()='State and City']/following-sibling::td").shouldHave(text("Uttar Pradesh Merrut"));
+        // Проверка итоговой модалки(не всегда сохраняется поле Subjects, поэтому его не проверяю)
+        $(".modal-content").shouldBe(visible);
+        $(byText("Student Name")).parent().shouldHave(text("Ivan Petrov"));
+        $(byText("Student Email")).parent().shouldHave(text(email));
+        $$("tr").filter(text("Gender")).first().shouldHave(text("Male"));
+        $$("tr").filter(text("Mobile")).first().shouldHave(text(phone));
+        $$("tr").filter(text("Date of Birth")).first().shouldHave(text("01 January,2000"));
+        $$("tr").filter(text("Hobbies")).first().shouldHave(text("Reading"));
+        $$("tr").filter(text("Picture")).first().shouldHave(text("hedgehog.jpg"));
+        $(byText("Address")).parent().shouldHave(text(address));
+        $$("tr").filter(text("State and City")).first().shouldHave(text("Uttar Pradesh Merrut"));
     }
 }
