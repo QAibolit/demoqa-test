@@ -8,7 +8,6 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class PracticeFormTest {
@@ -55,12 +54,12 @@ public class PracticeFormTest {
         $(".modal-content").shouldBe(visible);
         $(byText("Student Name")).parent().shouldHave(text("Ivan Petrov"));
         $(byText("Student Email")).parent().shouldHave(text(email));
-        $$("tr").filter(text("Gender")).first().shouldHave(text("Male"));
-        $$("tr").filter(text("Mobile")).first().shouldHave(text(phone));
-        $$("tr").filter(text("Date of Birth")).first().shouldHave(text("01 January,2000"));
-        $$("tr").filter(text("Hobbies")).first().shouldHave(text("Reading"));
-        $$("tr").filter(text("Picture")).first().shouldHave(text("hedgehog.jpg"));
+        $("table").$(byText("Gender")).parent().shouldHave(text("Male"));
+        $("table").$(byText("Mobile")).parent().shouldHave(text(phone));
+        $("table").$(byText("Date of Birth")).parent().shouldHave(text("01 January,2000"));
+        $("table").$(byText("Hobbies")).parent().shouldHave(text("Reading"));
+        $("table").$(byText("Picture")).parent().shouldHave(text("hedgehog.jpg"));
         $(byText("Address")).parent().shouldHave(text(address));
-        $$("tr").filter(text("State and City")).first().shouldHave(text("Uttar Pradesh Merrut"));
+        $("table").$(byText("State and City")).parent().shouldHave(text("Uttar Pradesh Merrut"));
     }
 }
