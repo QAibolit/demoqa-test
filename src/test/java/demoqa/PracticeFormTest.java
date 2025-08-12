@@ -15,6 +15,7 @@ public class PracticeFormTest {
     public String email = "test123@test.ru";
     public String phone = "1234567891";
     public String address = "Lenin street, 1";
+    public String subject = "English";
 
     @BeforeAll
     public static void setUp(){
@@ -40,7 +41,7 @@ public class PracticeFormTest {
         $(".react-datepicker__month").shouldBe(visible);
         $("[class*=day--001]").click();
 
-        $("#subjectsInput").setValue("Design");
+        $("#subjectsInput").setValue(subject).pressEnter();
         $("#hobbies-checkbox-2").parent().click();
         $("#uploadPicture").uploadFromClasspath("uploadFiles/hedgehog.jpg");
         $("#currentAddress").setValue(address);
@@ -50,13 +51,13 @@ public class PracticeFormTest {
         $(byText("Merrut")).shouldBe(visible).click();
         $("#submit").click();
 
-        // Проверка итоговой модалки(не всегда сохраняется поле Subjects, поэтому его не проверяю)
         $(".modal-content").shouldBe(visible);
         $(byText("Student Name")).parent().shouldHave(text("Ivan Petrov"));
         $(byText("Student Email")).parent().shouldHave(text(email));
         $("table").$(byText("Gender")).parent().shouldHave(text("Male"));
         $("table").$(byText("Mobile")).parent().shouldHave(text(phone));
         $("table").$(byText("Date of Birth")).parent().shouldHave(text("01 January,2000"));
+        $("table").$(byText("Subjects")).parent().shouldHave(text(subject));
         $("table").$(byText("Hobbies")).parent().shouldHave(text("Reading"));
         $("table").$(byText("Picture")).parent().shouldHave(text("hedgehog.jpg"));
         $(byText("Address")).parent().shouldHave(text(address));
