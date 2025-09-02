@@ -9,19 +9,19 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class TextBoxPage extends AbstractPage {
 
-    private SelenideElement header = $(".text-center"),
+    private final SelenideElement header = $(".text-center"),
             fullNameInput = $("#userName"),
             emailInput = $("#userEmail"),
             currentAddressInput = $("#currentAddress"),
             permanentAddressInput = $("#permanentAddress"),
             submitButton = $("#submit");
 
-    private OutputFormComponent outputForm = new OutputFormComponent();
+    private final OutputFormComponent outputForm = new OutputFormComponent();
 
     @Override
     public TextBoxPage openPage() {
         open("/text-box");
-        this.header.shouldHave(text("Practice Form"));
+        this.header.shouldHave(text("Text Box"));
         return this;
     }
 
@@ -50,8 +50,28 @@ public class TextBoxPage extends AbstractPage {
         return this;
     }
 
-    public void checkOutputForm(String fullName, String email, String currentAddress, String permanentAddress) {
+    public TextBoxPage checkOutputFormIsVisible() {
         outputForm.shouldBeVisible();
-        outputForm.checkEnteredData(fullName, email, currentAddress, permanentAddress);
+        return this;
+    }
+
+    public TextBoxPage checkNameInOutputForm(String name) {
+        outputForm.shouldHaveName(name);
+        return this;
+    }
+
+    public TextBoxPage checkEmailInOutputForm(String email) {
+        outputForm.shouldHaveEmail(email);
+        return this;
+    }
+
+    public TextBoxPage checkCurrentAddressInOutputForm(String currentAddress) {
+        outputForm.shouldHaveCurrentAddress(currentAddress);
+        return this;
+    }
+
+    public TextBoxPage checkPermanentAddressInOutputForm(String permanentAddress) {
+        outputForm.shouldHavePermanentAddress(permanentAddress);
+        return this;
     }
 }
