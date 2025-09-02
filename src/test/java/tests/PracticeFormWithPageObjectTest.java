@@ -6,35 +6,46 @@ import pages.PracticeFormPage;
 
 public class PracticeFormWithPageObjectTest extends BaseTest {
 
+    String firstName = "Ivan",
+            lastName = "Petrov",
+            email = "test123@test.ru",
+            gender = "Male",
+            phone = "1234567891",
+            fullName = "Ivan Petrov",
+            subject = "English",
+            hobby = "Reading",
+            address = "Lenin street, 1",
+            redColor = "rgb(220, 53, 69)";
+
     PracticeFormPage practiceFormPage = new PracticeFormPage();
 
     @Test
     @DisplayName("Проверка полного заполнения формы регистрации")
     public void fillInAllFieldsOfPracticeForm() {
         practiceFormPage.openPage()
-                .setFirstName("Ivan")
-                .setLastName("Petrov")
-                .setEmail("test123@test.ru")
-                .setGender("Male")
-                .setPhone("1234567891")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setEmail(email)
+                .setGender(gender)
+                .setPhone(phone)
                 .setBirthdayDate("3", "January", "2000")
-                .setSubject("English")
-                .setHobbies("Reading")
+                .setSubject(subject)
+                .setHobbies(hobby)
                 .uploadPicture("uploadFiles/hedgehog.jpg")
-                .setCurrentAddress("Lenin street, 1")
+                .setCurrentAddress(address)
                 .selectState("Uttar Pradesh")
                 .selectCity("Merrut")
                 .submit()
                 .checkResultModalIsVisible()
-                .checkNameInResultModal("Ivan Petrov")
-                .checkEmailInResultModal("test123@test.ru")
-                .checkGenderInResultModal("Male")
-                .checkPhoneInResultModal("1234567891")
+                .checkNameInResultModal(fullName)
+                .checkEmailInResultModal(email)
+                .checkGenderInResultModal(gender)
+                .checkPhoneInResultModal(phone)
                 .checkBirthdayInResultModal("03 January,2000")
-                .checkSubjectsInResultModal("English")
-                .checkHobbiesInResultModal("Reading")
+                .checkSubjectsInResultModal(subject)
+                .checkHobbiesInResultModal(hobby)
                 .checkPictureNameInResultModal("hedgehog.jpg")
-                .checkAddressInResultModal("Lenin street, 1")
+                .checkAddressInResultModal(address)
                 .checkStateAndCityInResultModal("Uttar Pradesh Merrut");
     }
 
@@ -42,15 +53,15 @@ public class PracticeFormWithPageObjectTest extends BaseTest {
     @DisplayName("Проверка заполнения обязательных полей формы регистрации")
     public void fillInRequiredFieldsOfPracticeForm() {
         practiceFormPage.openPage()
-                .setFirstName("Ivan")
-                .setLastName("Petrov")
-                .setGender("Male")
-                .setPhone("1234567891")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setGender(gender)
+                .setPhone(phone)
                 .submit()
                 .checkResultModalIsVisible()
-                .checkNameInResultModal("Ivan Petrov")
-                .checkGenderInResultModal("Male")
-                .checkPhoneInResultModal("1234567891");
+                .checkNameInResultModal(fullName)
+                .checkGenderInResultModal(gender)
+                .checkPhoneInResultModal(phone);
 
     }
 
@@ -59,9 +70,9 @@ public class PracticeFormWithPageObjectTest extends BaseTest {
     public void fillInRequiredFieldsOfPracticeFormPartially() {
         practiceFormPage.openPage()
                 .submit()
-                .checkFirstNameFieldColor("rgb(220, 53, 69)")
-                .checkLastNameFieldColor("rgb(220, 53, 69)")
-                .checkPhoneFieldColor("rgb(220, 53, 69)")
-                .checkGenderRadiobuttonsColor("rgb(220, 53, 69)");
+                .checkFirstNameFieldColor(redColor)
+                .checkLastNameFieldColor(redColor)
+                .checkPhoneFieldColor(redColor)
+                .checkGenderRadiobuttonsColor(redColor);
     }
 }

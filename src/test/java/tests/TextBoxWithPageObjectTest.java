@@ -6,21 +6,26 @@ import pages.TextBoxPage;
 
 public class TextBoxWithPageObjectTest extends BaseTest {
 
+    String fullName = "Ivan Petrov",
+            email = "test123@test.ru",
+            currentAddress = "Moscow, Lenin street, 1",
+            permanentAddress = "Moscow, Lenin street, 107";
+
     TextBoxPage textBoxPage = new TextBoxPage();
 
     @Test
     @DisplayName("Проверка полного заполнения формы")
     public void fillInAllFieldsOfTextBoxForm() {
         textBoxPage.openPage()
-                .setFullName("Ivan Petrov")
-                .setEmail("test1@test.ru")
-                .setCurrentAddress("Moscow, Lenin street, 1")
-                .setPermanentAddress("Moscow, Lenin street, 107")
+                .setFullName(fullName)
+                .setEmail(email)
+                .setCurrentAddress(currentAddress)
+                .setPermanentAddress(permanentAddress)
                 .submit()
                 .checkOutputFormIsVisible()
-                .checkNameInOutputForm("Ivan Petrov")
-                .checkEmailInOutputForm("test1@test.ru")
-                .checkCurrentAddressInOutputForm("Moscow, Lenin street, 1")
-                .checkPermanentAddressInOutputForm("Moscow, Lenin street, 107");
+                .checkNameInOutputForm(fullName)
+                .checkEmailInOutputForm(email)
+                .checkCurrentAddressInOutputForm(currentAddress)
+                .checkPermanentAddressInOutputForm(permanentAddress);
     }
 }
