@@ -17,6 +17,7 @@ public class TextBoxWithPageObjectTest extends BaseTest {
     @DisplayName("Проверка полного заполнения формы")
     public void fillInAllFieldsOfTextBoxFormTest() {
         textBoxPage.openPage()
+                .closeBanners()
                 .setFullName(fullName)
                 .setEmail(email)
                 .setCurrentAddress(currentAddress)
