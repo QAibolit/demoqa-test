@@ -10,9 +10,10 @@ import static com.codeborne.selenide.Condition.cssValue;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static com.codeborne.selenide.Selenide.open;
 
-public class PracticeFormPage extends AbstractPage {
+public class PracticeFormPage {
 
     private final SelenideElement header = $(".text-center"),
             firstNameInput = $("#firstName"),
@@ -37,9 +38,10 @@ public class PracticeFormPage extends AbstractPage {
 
     private final ResultModalComponent resultModalWindow = new ResultModalComponent();
 
-    @Override
     public PracticeFormPage openPage() {
         open("/automation-practice-form");
+        executeJavaScript("$('footer').remove();");
+        executeJavaScript("$('#fixedban').remove();");
         this.header.shouldHave(text("Practice Form"));
         return this;
     }

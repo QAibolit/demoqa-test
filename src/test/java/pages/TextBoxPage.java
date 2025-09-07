@@ -5,9 +5,10 @@ import pages.components.OutputFormComponent;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 import static com.codeborne.selenide.Selenide.open;
 
-public class TextBoxPage extends AbstractPage {
+public class TextBoxPage {
 
     private final SelenideElement header = $(".text-center"),
             fullNameInput = $("#userName"),
@@ -18,9 +19,10 @@ public class TextBoxPage extends AbstractPage {
 
     private final OutputFormComponent outputForm = new OutputFormComponent();
 
-    @Override
     public TextBoxPage openPage() {
         open("/text-box");
+        executeJavaScript("$('footer').remove();");
+        executeJavaScript("$('#fixedban').remove();");
         this.header.shouldHave(text("Text Box"));
         return this;
     }
